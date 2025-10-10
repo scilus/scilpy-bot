@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scilpy-bot"
+version = "0.0.1"
+authors = [
+  { name="Francois Rheault", email="francois.m.rheault@usherbrooke.ca" },
+]
+description = "A chatbot to help you find the right scilpy script."
+readme = "README.md"
+requires-python = ">=3.10, <=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "scilpy",
+    "openai",
+    "google-generativeai",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/scilus/scilpy-bot/"
+"Bug Tracker" = "https://github.com/scilus/scilpy-bot/issues"
+
+[project.scripts]
+scil_chatbot = "scilpy_bot.scil_chatbot:main"

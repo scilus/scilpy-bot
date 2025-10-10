@@ -53,7 +53,9 @@ except ImportError:
 try:
     import google.generativeai as genai
     gemini_available = True
-    gemini_api_key = os.environ.get("GOOGLE_API_KEY") if os.environ.get("GOOGLE_API_KEY") else os.environ.get("GEMINI_API_KEY")
+    gemini_api_key = os.environ.get("GOOGLE_API_KEY") \
+        if os.environ.get("GOOGLE_API_KEY") \
+        else os.environ.get("GEMINI_API_KEY")
     if gemini_api_key:
         genai.configure(api_key=gemini_api_key)
     else:
@@ -68,11 +70,9 @@ BLUE = "\033[94m"
 RESET = "\033[0m"
 
 
-def build_arg_parser():
-    """Build argument parser."""
-    p = argparse.ArgumentParser(
-        description="__doc__"
-    )
+def _build_arg_parser():
+    p = argparse.ArgumentParser(description=__doc__,
+                                formatter_class=argparse.RawTextHelpFormatter)
     group = p.add_mutually_exclusive_group()
     group.add_argument('--gemini', action='store_true',
                        help='Use Gemini model')
@@ -145,6 +145,10 @@ def ask_gemini(user_input, context, chat_session):
 
 def chat_loop(model_name, context):
     """Interactive chat loop with conversation memory."""
+    print(f"{YELLOW}WARNING: This chatbot uses a Large Language Model (LLM). "
+          "The information provided may be inaccurate. "
+          "Always verify that the proposed script exists and read its --help "
+          f"before use.{RESET}")
     print(f"Starting {model_name} chat. Type 'exit' or 'quit' "
           "to end the session.")
     print("-" * 60)
@@ -216,8 +220,7 @@ def chat_loop(model_name, context):
 
 
 def main():
-    """Main function."""
-    parser = build_arg_parser()
+    parser = _build_arg_parser()
     args = parser.parse_args()
 
     # Determine which model to use
